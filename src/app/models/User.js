@@ -18,9 +18,17 @@ class User extends Model {
             if (user.password) {
               user.password_hash = await bcrypt.hash(user.password, 8);
             }
-          });
+        });
 
         return this;
+    }
+
+    // recebe a senha e retorna a comparação da senha que ele passou
+    // mais a senha que está criptografada. basicamente vai criptografar
+    // e tentar comparar os dois hashs
+
+    checkPassword(password) {
+        return bcrypt.compare(password, this.password_hash);
     }
 }
 
