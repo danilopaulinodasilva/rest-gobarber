@@ -9,7 +9,7 @@ class User extends Model {
             password_hash: Sequelize.STRING,
             provider: Sequelize.BOOLEAN,
         },{
-            sequelize
+            sequelize // passa a conexão
         }); 
     }
 }
