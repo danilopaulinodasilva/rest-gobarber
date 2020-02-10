@@ -26,6 +26,10 @@ class UserController {
         });
     }
 
+    async update(req,res) {
+        return res.json({ ok: true })
+    }
+
 }
 
 module.exports = new UserController();
