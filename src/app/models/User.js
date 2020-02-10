@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const { Model } = require('sequelize');
 
 class User extends Model {
@@ -13,4 +14,4 @@ class User extends Model {
     }
 }
 
-export default User;
+module.exports = User;
