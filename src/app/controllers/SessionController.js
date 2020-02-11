@@ -1,9 +1,19 @@
+const Yup = require('yup');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const authConfig = require('../../config/auth'); // arquivo de config para o jwt, pode ser usando .env
 
 class SessionController {
     async store(req,res) {
+
+        const schema = Yup.object().shape({
+            email: Yup.string().email(),
+            password: Yup.string().required(),
+          });
+      
+          if (!(await schema.isValid(req.body))) {
+            return res.status(400).json({ error: 'Validation failed' });
+          }
 
         const { email, password } = req.body;
 
@@ -18,7 +28,7 @@ class SessionController {
         // verifica se a senha que ele passou realmente bate com a senha do banco de dados
         // para isso usa-se o checkPassword() que está no model User  
         if(!(await user.checkPassword(password))) { // o metodo checkPassword é assincrono, por isso o await. aguardando um false por isso a negação com !
-            return res.status(401).json({ error: 'Password don\'t match' });
+            return res.status(401).json({ error: 'Password does not match' });
         }
 
         // apenas o que vai retornar do usuário, menos email que já está definido lá em cima
